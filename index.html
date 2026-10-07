@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LHYRICZ FRUIT BAY — Freshness in Every Bite. Order fresh fruit products and drinks via WhatsApp." />
+  <meta name="theme-color" content="#087a35" />
+  <title>LHYRICZ FRUIT BAY | Order Freshness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="LHYRICZ FRUIT BAY home">
+        <img src="assets/logo.png" alt="LHYRICZ FRUIT BAY logo" />
+      </a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="cart-button" id="openCartBtn" type="button" aria-label="Open shopping cart">
+        <span>Cart</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-glow hero-glow-one"></div>
+      <div class="hero-glow hero-glow-two"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Fresh • Natural • Delicious</span>
+          <h1>Freshness in <span data-announcement>Every Bite.</span></h1>
+          <p>Welcome to <span data-business-name>LHYRICZ FRUIT BAY</span> — your destination for fresh fruit bowls, juices, smoothies and refreshing treats made for every moment.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#menu">Explore Menu</a>
+            <button class="btn btn-outline" type="button" id="heroWhatsAppBtn">Order on WhatsApp</button>
+          </div>
+          <div class="hero-trust">
+            <div><strong>100%</strong><span>Fresh selections</span></div>
+            <div><strong>Fast</strong><span>WhatsApp ordering</span></div>
+            <div><strong>Easy</strong><span>Pickup or delivery</span></div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Fresh fruit showcase">
+          <div class="fruit-orbit orbit-one"></div>
+          <div class="fruit-orbit orbit-two"></div>
+          <div class="hero-card hero-card-main">
+            <div class="fruit-art fruit-bowl-art" aria-hidden="true">
+              <span>🍍</span><span>🍉</span><span>🍓</span><span>🥭</span><span>🍊</span>
+            </div>
+            <div class="hero-card-label">Fresh fruit made your way</div>
+          </div>
+          <div class="floating-badge badge-top">Naturally fresh</div>
+          <div class="floating-badge badge-bottom">Order in minutes</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="menu">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Our Menu</span>
+            <h2>Choose your freshness</h2>
+          </div>
+          <p>Explore refreshing favourites made to suit every craving, from nourishing fruit blends to delicious treats and drinks prepared with care.</p>
+        </div>
+        <div class="category-row" id="categoryRow" role="tablist" aria-label="Menu categories"></div>
+        <div class="products-grid" id="productsGrid"></div>
+      </div>
+    </section>
+
+    <section class="about section" id="about">
+      <div class="container about-grid">
+        <div class="about-image">
+          <img src="assets/logo.png" alt="LHYRICZ FRUIT BAY" />
+        </div>
+        <div class="about-copy">
+          <span class="eyebrow">Why LHYRICZ FRUIT BAY?</span>
+          <h2>Good fruit. Great taste. Simple ordering.</h2>
+          <p>At LHYRICZ FRUIT BAY, we bring together fresh ingredients, delicious flavour and a simple ordering experience so you can enjoy something refreshing without the hassle.</p>
+          <div class="feature-list">
+            <div><span class="feature-icon">✓</span><div><strong>Fresh ingredients</strong><p>We focus on vibrant, refreshing choices prepared with quality and care.</p></div></div>
+            <div><span class="feature-icon">✓</span><div><strong>Made for your moment</strong><p>Whether you need a quick refreshment or a satisfying treat, there is something to enjoy.</p></div></div>
+            <div><span class="feature-icon">✓</span><div><strong>Simple ordering</strong><p>Choose what you love, add it to your cart and send your order straight to us.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section" id="contact">
+      <div class="container contact-card">
+        <div>
+          <span class="eyebrow">Ready to order?</span>
+          <h2>Send your order straight to <span data-business-name>LHYRICZ FRUIT BAY</span>.</h2>
+          <p>Build your cart, enter your details and send the order through WhatsApp.</p>
+        </div>
+        <button class="btn btn-primary" type="button" id="contactWhatsAppBtn">Chat on WhatsApp</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <div class="footer-brand"><img src="assets/logo.png" alt="LHYRICZ FRUIT BAY" /><span>Freshness in Every Bite.</span></div>
+      <div class="footer-contact"><span>WhatsApp: <span id="footerWhatsapp">020 391 0059</span></span><a href="#top">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="cartOverlay" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="drawer-header">
+      <div><span class="eyebrow">Your Order</span><h2>Shopping Cart</h2></div>
+      <button class="icon-button" id="closeCartBtn" type="button" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-empty" id="cartEmpty"><span>🛒</span><h3>Your cart is empty</h3><p>Add something fresh from the menu.</p></div>
+    <div class="cart-summary" id="cartSummary" hidden>
+      <div class="summary-row"><span>Subtotal</span><strong id="subtotal">GH₵0.00</strong></div>
+      <div class="summary-row"><span>Delivery</span><strong id="deliveryFee">Calculated at checkout</strong></div>
+      <div class="summary-row total-row"><span>Total</span><strong id="cartTotal">GH₵0.00</strong></div>
+      <button class="btn btn-primary full" type="button" id="checkoutBtn">Proceed to Checkout</button>
+    </div>
+  </aside>
+
+  <div class="modal" id="checkoutModal" hidden>
+    <div class="modal-card">
+      <button class="icon-button modal-close" id="closeCheckoutBtn" type="button" aria-label="Close checkout">×</button>
+      <span class="eyebrow">Checkout</span>
+      <h2>Complete your order</h2>
+      <p class="modal-subtitle">Your order will be prepared as a WhatsApp message for LHYRICZ FRUIT BAY.</p>
+      <form id="checkoutForm">
+        <div class="form-grid">
+          <label>Full name<input name="name" required maxlength="60" placeholder="Your name" /></label>
+          <label>Phone number<input name="phone" required maxlength="20" placeholder="020 000 0000" /></label>
+        </div>
+        <label>Order type
+          <select name="orderType" id="orderType" required>
+            <option value="Pickup">Pickup</option>
+            <option value="Delivery">Delivery</option>
+          </select>
+        </label>
+        <label id="locationField" class="hidden-field">Delivery location<input name="location" maxlength="120" placeholder="Where should we deliver?" /></label>
+        <label>Preferred time<input name="time" maxlength="40" placeholder="e.g. As soon as possible" /></label>
+        <label>Special instructions<textarea name="notes" rows="3" maxlength="300" placeholder="Any special request?"></textarea></label>
+        <div class="checkout-total"><span>Order total</span><strong id="checkoutTotal">GH₵0.00</strong></div>
+        <button class="btn btn-primary full" type="submit">Send Order to WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+    <a href="#home" class="mobile-nav-item">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+    <a href="#menu" class="mobile-nav-item">
+      <span class="mobile-nav-icon">☰</span>
+      <span>Menu</span>
+    </a>
+    <button type="button" class="mobile-nav-item mobile-nav-button" id="mobileCartBtn" aria-label="Open shopping cart">
+      <span class="mobile-cart-icon-wrap">🛒<span class="mobile-cart-count" id="mobileCartCount">0</span></span>
+      <span>Cart</span>
+    </button>
+    <button type="button" class="mobile-nav-item mobile-nav-button" id="mobileWhatsAppBtn" aria-label="Order on WhatsApp">
+      <span class="mobile-nav-icon">☏</span>
+      <span>WhatsApp</span>
+    </button>
+  </nav>
+
+  <script src="store.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

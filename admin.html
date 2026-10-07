@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#087a35">
+  <title>LHYRICZ FRUIT BAY | Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <section class="admin-login-view" id="loginView">
+    <div class="login-card">
+      <img src="assets/logo.png" alt="LHYRICZ FRUIT BAY" class="login-logo">
+      <span class="eyebrow">Business Management</span>
+      <h1>Admin access</h1>
+      <p>Enter the business password to manage products, prices and store settings.</p>
+      <div class="admin-login-message" id="loginMessage" aria-live="polite"></div>
+      <form id="loginForm">
+        <label>Password
+          <input id="adminPasswordInput" type="password" autocomplete="current-password" required placeholder="Enter admin password">
+        </label>
+        <button class="primary-btn full" type="submit">Open Dashboard</button>
+      </form>
+      <a class="back-link" href="index.html">← Back to store</a>
+    </div>
+  </section>
+
+  <div id="appView" hidden>
+    <header class="admin-header">
+      <div class="header-inner">
+        <a class="admin-brand" href="index.html">
+          <img src="assets/logo.png" alt="LHYRICZ FRUIT BAY">
+          <span>LHYRICZ FRUIT BAY</span>
+        </a>
+        <div class="header-actions">
+          <a class="secondary-btn" href="index.html">View Store</a>
+          <button class="secondary-btn" id="logoutBtn" type="button">Lock Dashboard</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="page-title">
+        <div>
+          <span class="eyebrow">Control Centre</span>
+          <h1>Manage your store</h1>
+          <p>Update the menu and basic business settings without touching the website code.</p>
+        </div>
+        <button class="primary-btn" id="addProductBtn" type="button">+ Add Item</button>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card"><span>Total items</span><strong id="totalItems">0</strong></article>
+        <article class="stat-card"><span>Visible items</span><strong id="visibleItems">0</strong></article>
+        <article class="stat-card"><span>Categories</span><strong id="totalCategories">0</strong></article>
+        <article class="stat-card"><span>WhatsApp</span><strong id="statWhatsapp">—</strong></article>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div><span class="eyebrow">Menu</span><h2>Products</h2><p>Add new food, edit prices, change details, hide items or delete them.</p></div>
+          <input class="search-input" id="searchProducts" type="search" placeholder="Search products...">
+        </div>
+        <div class="product-table" id="productTable"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><span class="eyebrow">Store setup</span><h2>Business settings</h2><p>These details appear across the customer website and WhatsApp checkout.</p></div></div>
+        <div class="settings-grid">
+          <form class="settings-form" id="settingsForm">
+            <div class="two-col">
+              <label>Business name<input name="businessName" maxlength="80" required></label>
+              <label>WhatsApp number<input name="whatsapp" maxlength="20" required></label>
+            </div>
+            <div class="two-col">
+              <label>Currency<input name="currency" maxlength="8" required></label>
+              <label>Delivery fee<input name="deliveryFee" type="number" min="0" step="0.01" required></label>
+            </div>
+            <label>Opening hours<input name="openingHours" maxlength="120"></label>
+            <label>Homepage tagline<input name="announcement" maxlength="120"></label>
+            <button class="primary-btn" type="submit">Save Store Settings</button>
+          </form>
+          <div>
+            <span class="eyebrow">Admin password</span>
+            <h3>Change access password</h3>
+            <p class="small-copy">Use a password you can remember. Anyone who can access this browser's stored data may be able to inspect a static site, so this simple password gate is best treated as an MVP rather than high-security authentication.</p>
+            <form class="settings-form" id="passwordForm">
+              <label>Current password<input name="current" type="password" required></label>
+              <label>New password<input name="next" type="password" minlength="6" required></label>
+              <button class="secondary-btn" type="submit">Change Password</button>
+            </form>
+            <div class="backup-actions">
+              <button class="secondary-btn" id="exportBtn" type="button">Export Backup</button>
+              <label class="file-btn">Import Backup<input id="importInput" type="file" accept="application/json" hidden></label>
+              <button class="danger-btn" id="resetBtn" type="button">Reset Demo Data</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <p class="admin-note"><strong>Important:</strong> This version is fully static. Menu changes are stored in the browser with localStorage. That means edits made on one device/browser do not automatically sync to customers' other devices. We can add a real cloud database later when you are ready.</p>
+    </main>
+  </div>
+
+  <div class="modal" id="productModal" hidden>
+    <div class="modal-card">
+      <button class="close-modal" id="closeProductModal" type="button" aria-label="Close">×</button>
+      <span class="eyebrow">Menu item</span>
+      <h2 id="productModalTitle">Add Item</h2>
+      <form class="product-form" id="productForm">
+        <input name="id" type="hidden">
+        <div class="image-editor">
+          <div class="image-preview" id="imagePreview"><span>🍽️</span></div>
+          <div><label>Product photo<input name="imageFile" type="file" accept="image/png,image/jpeg,image/webp"></label><small>Use a clear food photo. The browser will compress it for storage.</small></div>
+        </div>
+        <div class="two-col">
+          <label>Item name<input name="name" required maxlength="80"></label>
+          <label>Price<input name="price" type="number" min="0" step="0.01" required></label>
+        </div>
+        <div class="two-col">
+          <label>Category<input name="category" list="categoryOptions" required maxlength="50"><datalist id="categoryOptions"></datalist></label>
+          <label>Emoji fallback<input name="emoji" maxlength="4" placeholder="🍓"></label>
+        </div>
+        <label>Description<textarea name="description" rows="4" maxlength="240" placeholder="Short, appealing description"></textarea></label>
+        <label class="switch-row"><input name="available" type="checkbox" checked> Show this item on the customer menu</label>
+        <div class="modal-actions"><button class="secondary-btn" id="cancelProductBtn" type="button">Cancel</button><button class="primary-btn" type="submit">Save Item</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="store.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
