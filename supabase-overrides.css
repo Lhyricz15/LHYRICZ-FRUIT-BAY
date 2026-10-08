@@ -1,0 +1,25 @@
+/* Supabase storefront additions */
+.products-grid{align-items:stretch}
+.product-card{overflow:hidden}
+.product-card-image{position:relative;min-height:220px;background:#eef7ea;display:grid;place-items:center}
+.product-card-image img{width:100%;height:220px;object-fit:cover}
+.product-emoji{font-size:5rem}
+.product-category{position:absolute;left:14px;top:14px;background:rgba(255,255,255,.92);padding:6px 10px;border-radius:999px;font-size:.7rem;font-weight:800}
+.product-card-body{padding:18px}
+.product-card-body h3{margin:0 0 7px}
+.product-card-body p{min-height:45px}
+.product-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:15px}
+.product-add{border:0}
+.category-pill{border:1px solid #dce5dc;background:#fff;border-radius:999px;padding:9px 14px;font-weight:800;cursor:pointer}
+.category-pill.active{background:#087a35;color:#fff;border-color:#087a35}
+.menu-empty{grid-column:1/-1;text-align:center;padding:45px 20px;display:grid;gap:7px;color:#68736c}
+.cart-item{display:grid;grid-template-columns:48px 1fr auto;gap:10px;align-items:center}
+.cart-item-thumb{width:48px;height:48px;border-radius:12px;background:#eef7ea;display:grid;place-items:center;overflow:hidden}
+.cart-item-thumb img{width:100%;height:100%;object-fit:cover}
+.cart-item-info{display:grid;gap:3px}
+.cart-item-controls{display:flex;align-items:center;gap:9px}
+.cart-item-controls button{width:25px;height:25px;border:1px solid #dce5dc;background:#fff;border-radius:7px}
+.hidden-field{display:none!important}
+
+.order-status-select{border:1px solid #dce5dc;background:#fff;border-radius:10px;padding:8px 9px;font:inherit;font-weight:800}
+@media(max-width:650px){.order-status-select{grid-column:2;justify-self:end}.product-card-bottom{align-items:stretch;flex-direction:column}.product-card-bottom .product-add{width:100%}}
