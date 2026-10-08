@@ -272,6 +272,39 @@ document.addEventListener("DOMContentLoaded", async () => {
   $("#contactWhatsAppBtn")?.addEventListener("click", wa);
   $("#mobileWhatsAppBtn")?.addEventListener("click", wa);
 
+  /* =========================================
+   LIGHT / DARK MODE
+   ========================================= */
+
+const themeToggle = document.getElementById("theme-toggle");
+
+if (themeToggle) {
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("fruitBayTheme");
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeToggle.textContent = "☀️";
+    }
+
+    themeToggle.addEventListener("click", () => {
+
+        document.body.classList.toggle("dark-mode");
+
+        const isDarkMode = document.body.classList.contains("dark-mode");
+
+        if (isDarkMode) {
+            themeToggle.textContent = "☀️";
+            localStorage.setItem("fruitBayTheme", "dark");
+        } else {
+            themeToggle.textContent = "🌙";
+            localStorage.setItem("fruitBayTheme", "light");
+        }
+
+    });
+}
+
   Store.subscribeToStore(async () => {
     await refreshStore();
   });
