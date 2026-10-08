@@ -159,7 +159,9 @@ function whatsappNumber() {
 function openWhatsApp(text = `Hello ${settings.businessName || "LHYRICZ FRUIT BAY"}, I would like to place an order.`) {
   const n = whatsappNumber();
   if (!n) return alert("WhatsApp number has not been configured.");
-  window.open(`https://wa.me/${n}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+  const waUrl = `https://wa.me/${n}?text=${encodeURIComponent(text)}`;
+  const popup = window.open(waUrl, "_blank", "noopener");
+  if (!popup) window.location.href = waUrl;
 }
 
 function buildWhatsAppMessage(form) {
@@ -192,19 +194,47 @@ function buildWhatsAppMessage(form) {
   ].filter(Boolean).join("\n");
 }
 
-function submitCheckout(event) {
+async function submitCheckout(event) {
   event.preventDefault();
   if (!cart.length) return;
   const form = event.currentTarget;
+  const submit = form.querySelector("button[type=submit]");
+  submit.disabled = true;
+  submit.textContent = "Sending order…";
 
-  const message = buildWhatsAppMessage(form);
-  cart = [];
-  saveCart();
-  renderCart();
-  closeCheckout();
-  form.reset();
-  $("#locationField").classList.add("hidden-field");
-  openWhatsApp(message);
+  try {
+    const delivery = form.orderType.value === "Delivery" ? Number(settings.deliveryFee || 0) : 0;
+    const sub = subtotal();
+    const total = sub + delivery;
+
+    await Store.createOrder({
+      customerName: form.name.value,
+      phone: form.phone.value,
+      orderType: form.orderType.value,
+      location: form.location.value,
+      preferredTime: form.time.value,
+      notes: form.notes.value,
+      items: cart,
+      subtotal: sub,
+      deliveryFee: delivery,
+      total
+    });
+
+    const message = buildWhatsAppMessage(form);
+    cart = [];
+    saveCart();
+    renderCart();
+    closeCheckout();
+    form.reset();
+    $("#locationField").classList.add("hidden-field");
+    openWhatsApp(message);
+  } catch (error) {
+    console.error(error);
+    alert(`The order could not be saved: ${error.message || "Please try again."}`);
+  } finally {
+    submit.disabled = false;
+    submit.textContent = "Send Order to WhatsApp";
+  }
 }
 
 async function refreshStore() {
