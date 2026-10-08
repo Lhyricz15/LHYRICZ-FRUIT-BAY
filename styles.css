@@ -596,10 +596,29 @@ input:focus, select:focus, textarea:focus { border-color: #89b896; box-shadow: 0
   }
 }
 
-/* TikTok Footer Link */
+.footer-bottom {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto 0;
+    padding: 18px 0 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    text-align: left;
+}
+
 .tiktok-link {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 
     color: inherit;
@@ -607,13 +626,16 @@ input:focus, select:focus, textarea:focus { border-color: #89b896; box-shadow: 0
 
     font-size: 14px;
     font-weight: 600;
+    white-space: nowrap;
 
-    transition: all 0.3s ease;
+    line-height: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .tiktok-link svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
+    display: block;
     fill: currentColor;
     flex-shrink: 0;
 }
@@ -621,6 +643,20 @@ input:focus, select:focus, textarea:focus { border-color: #89b896; box-shadow: 0
 .tiktok-link:hover {
     opacity: 0.75;
     transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .footer-bottom {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .footer-bottom p {
+        text-align: center;
+    }
 }
 
 /* =========================================
