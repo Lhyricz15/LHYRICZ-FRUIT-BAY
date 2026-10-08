@@ -596,34 +596,31 @@ input:focus, select:focus, textarea:focus { border-color: #89b896; box-shadow: 0
   }
 }
 
-/* Footer Bottom */
-.footer-bottom {
-    margin-top: 30px;
-    padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-
-    font-size: 14px;
-}
-
-.footer-bottom p {
-    margin: 0;
-}
-
+/* TikTok Footer Link */
 .tiktok-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
     color: inherit;
     text-decoration: none;
+
+    font-size: 14px;
     font-weight: 600;
-    transition: opacity 0.3s ease;
+
+    transition: all 0.3s ease;
+}
+
+.tiktok-link svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    flex-shrink: 0;
 }
 
 .tiktok-link:hover {
-    opacity: 0.7;
+    opacity: 0.75;
+    transform: translateY(-2px);
 }
 
 /* =========================================
