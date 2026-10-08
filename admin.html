@@ -68,6 +68,14 @@
       </section>
 
       <section class="panel">
+        <div class="panel-head">
+          <div><span class="eyebrow">Orders</span><h2>Customer orders</h2><p>Orders placed from the website appear here in real time.</p></div>
+          <button class="secondary-btn" id="refreshOrdersBtn" type="button">Refresh Orders</button>
+        </div>
+        <div class="product-table" id="ordersTable"></div>
+      </section>
+
+      <section class="panel">
         <div class="panel-head"><div><span class="eyebrow">Store setup</span><h2>Business settings</h2><p>These details appear across the customer website and WhatsApp checkout.</p></div></div>
         <div class="settings-grid">
           <form class="settings-form" id="settingsForm">
@@ -100,7 +108,7 @@
           </div>
         </div>
       </section>
-      <p class="admin-note"><strong>Important:</strong> This version is fully static. Menu changes are stored in the browser with localStorage. That means edits made on one device/browser do not automatically sync to customers' other devices. We can add a real cloud database later when you are ready.</p>
+      <p class="admin-note"><strong>Cloud database:</strong> Products, photos, orders and store settings are now stored in Supabase and shared across devices. The shopping cart itself remains local to the customer's browser until checkout.</p>
     </main>
   </div>
 
@@ -131,6 +139,7 @@
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="store.js"></script>
   <script src="admin.js"></script>
 </body>
