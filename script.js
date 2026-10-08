@@ -225,7 +225,6 @@ async function submitCheckout(event) {
     closeCheckout();
     form.reset();
     $("#locationField").classList.add("hidden-field");
-    alert("Your order has been saved. WhatsApp will now open so you can send the order to the business.");
     openWhatsApp(message);
   } catch (error) {
     console.error(error);
