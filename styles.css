@@ -595,5 +595,105 @@ input:focus, select:focus, textarea:focus { border-color: #89b896; box-shadow: 0
     padding-inline: 8px;
   }
 }
+
+/* Footer Bottom */
+.footer-bottom {
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+
+    font-size: 14px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.tiktok-link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.tiktok-link:hover {
+    opacity: 0.7;
+}
+
+/* =========================================
+   LIGHT / DARK MODE
+   ========================================= */
+
+:root {
+    --bg-color: #fffdf5;
+    --text-color: #1a1a1a;
+    --card-color: #ffffff;
+    --border-color: rgba(0, 0, 0, 0.12);
+    --secondary-text: #555555;
+}
+
+/* Dark Theme */
+body.dark-mode {
+    --bg-color: #111111;
+    --text-color: #ffffff;
+    --card-color: #1c1c1c;
+    --border-color: rgba(255, 255, 255, 0.15);
+    --secondary-text: #cccccc;
+}
+
+/* Apply theme */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Cards and common sections */
+.card,
+.menu-card,
+.product-card,
+.modal-content {
+    background-color: var(--card-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* Secondary text */
+.text-muted,
+.description,
+.subtitle {
+    color: var(--secondary-text);
+}
+
+/* Theme button */
+.theme-toggle {
+    width: 42px;
+    height: 42px;
+
+    border: 2px solid currentColor;
+    border-radius: 50%;
+
+    background: transparent;
+    color: inherit;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg) scale(1.05);
+}
 .admin-link{color:#fbd66d;font-weight:800}.product-image img{width:100%;height:100%;object-fit:cover}.cart-item-image img{width:100%;height:100%;object-fit:cover}.empty-menu{grid-column:1 / -1;text-align:center;padding:50px 20px;border:1px dashed var(--line);border-radius:18px;background:#fff;color:var(--muted);display:grid;gap:4px}.empty-menu strong{color:var(--ink)}
 .account-link{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border-radius:12px;border:1px solid rgba(8,122,53,.2);color:#087a35;text-decoration:none;font-weight:800;font-size:13px;background:#fff}.footer-contact .account-link{margin-right:8px}@media(max-width:650px){.site-header .account-link{display:none}.footer-contact .account-link{display:inline-flex}}
