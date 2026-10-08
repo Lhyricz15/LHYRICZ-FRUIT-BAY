@@ -192,47 +192,19 @@ function buildWhatsAppMessage(form) {
   ].filter(Boolean).join("\n");
 }
 
-async function submitCheckout(event) {
+function submitCheckout(event) {
   event.preventDefault();
   if (!cart.length) return;
   const form = event.currentTarget;
-  const submit = form.querySelector("button[type=submit]");
-  submit.disabled = true;
-  submit.textContent = "Saving order…";
 
-  try {
-    const delivery = form.orderType.value === "Delivery" ? Number(settings.deliveryFee || 0) : 0;
-    const sub = subtotal();
-    const total = sub + delivery;
-
-    await Store.createOrder({
-      customerName: form.name.value,
-      phone: form.phone.value,
-      orderType: form.orderType.value,
-      location: form.location.value,
-      preferredTime: form.time.value,
-      notes: form.notes.value,
-      items: cart,
-      subtotal: sub,
-      deliveryFee: delivery,
-      total
-    });
-
-    const message = buildWhatsAppMessage(form);
-    cart = [];
-    saveCart();
-    renderCart();
-    closeCheckout();
-    form.reset();
-    $("#locationField").classList.add("hidden-field");
-    openWhatsApp(message);
-  } catch (error) {
-    console.error(error);
-    alert(`The order could not be saved: ${error.message || "Please try again."}`);
-  } finally {
-    submit.disabled = false;
-    submit.textContent = "Send Order to WhatsApp";
-  }
+  const message = buildWhatsAppMessage(form);
+  cart = [];
+  saveCart();
+  renderCart();
+  closeCheckout();
+  form.reset();
+  $("#locationField").classList.add("hidden-field");
+  openWhatsApp(message);
 }
 
 async function refreshStore() {
