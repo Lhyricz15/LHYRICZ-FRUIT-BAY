@@ -164,7 +164,7 @@ function openWhatsApp(text = `Hello ${settings.businessName || "LHYRICZ FRUIT BA
   if (!popup) window.location.href = waUrl;
 }
 
-function buildWhatsAppMessage(form) {
+function buildWhatsAppMessage(form, orderId) {
   const sub = subtotal();
   const delivery = form.orderType.value === "Delivery" ? Number(settings.deliveryFee || 0) : 0;
   const total = sub + delivery;
@@ -176,6 +176,7 @@ function buildWhatsAppMessage(form) {
     `Hello ${settings.businessName || "LHYRICZ FRUIT BAY"}!`,
     "",
     "NEW WEBSITE ORDER",
+    `Order ID: ${orderId}`,
     `Customer: ${form.name.value.trim()}`,
     `Phone: ${form.phone.value.trim()}`,
     `Order type: ${form.orderType.value}`,
@@ -207,7 +208,7 @@ async function submitCheckout(event) {
     const sub = subtotal();
     const total = sub + delivery;
 
-    await Store.createOrder({
+    const savedOrder = await Store.createOrder({
       customerName: form.name.value,
       phone: form.phone.value,
       orderType: form.orderType.value,
@@ -220,7 +221,8 @@ async function submitCheckout(event) {
       total
     });
 
-    const message = buildWhatsAppMessage(form);
+    const orderId = `LFB-${String(savedOrder.id).replace(/-/g, "").toUpperCase()}`;
+    const message = buildWhatsAppMessage(form, orderId);
     cart = [];
     saveCart();
     renderCart();
@@ -228,12 +230,39 @@ async function submitCheckout(event) {
     form.reset();
     $("#locationField").classList.add("hidden-field");
     openWhatsApp(message);
+    showOrderConfirmation(orderId);
   } catch (error) {
     console.error(error);
     alert(`The order could not be saved: ${error.message || "Please try again."}`);
   } finally {
     submit.disabled = false;
     submit.textContent = "Send Order to WhatsApp";
+  }
+}
+
+function showOrderConfirmation(orderId) {
+  const modal = $("#orderConfirmationModal");
+  const idEl = $("#confirmedOrderId");
+  if (!modal || !idEl) {
+    alert(`Your order has been saved. Order ID: ${orderId}`);
+    return;
+  }
+  idEl.textContent = orderId;
+  modal.hidden = false;
+}
+
+async function copyOrderId() {
+  const orderId = $("#confirmedOrderId")?.textContent || "";
+  if (!orderId) return;
+  try {
+    await navigator.clipboard.writeText(orderId);
+    const button = $("#copyOrderIdBtn");
+    if (button) {
+      button.textContent = "Copied!";
+      setTimeout(() => { button.textContent = "Copy Order ID"; }, 1800);
+    }
+  } catch (_) {
+    window.prompt("Copy your Order ID:", orderId);
   }
 }
 
@@ -262,6 +291,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   $("#checkoutBtn")?.addEventListener("click", openCheckout);
   $("#closeCheckoutBtn")?.addEventListener("click", closeCheckout);
   $("#checkoutForm")?.addEventListener("submit", submitCheckout);
+  $("#closeOrderConfirmationBtn")?.addEventListener("click", () => { $("#orderConfirmationModal").hidden = true; });
+  $("#doneOrderConfirmationBtn")?.addEventListener("click", () => { $("#orderConfirmationModal").hidden = true; });
+  $("#copyOrderIdBtn")?.addEventListener("click", copyOrderId);
 
   $("#orderType")?.addEventListener("change", e => {
     $("#locationField").classList.toggle("hidden-field", e.target.value !== "Delivery");
