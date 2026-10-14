@@ -177,6 +177,19 @@
     </div>
   </div>
 
+  <div class="modal" id="orderConfirmationModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="orderConfirmationTitle">
+      <button class="icon-button modal-close" id="closeOrderConfirmationBtn" type="button" aria-label="Close confirmation">×</button>
+      <span class="eyebrow">Order received</span>
+      <h2 id="orderConfirmationTitle">Thank you for your order!</h2>
+      <p>Your order has been saved. Keep this Order ID so you can refer to your order later.</p>
+      <div class="checkout-total"><span>Your Order ID</span><strong id="confirmedOrderId"></strong></div>
+      <button class="btn btn-primary full" id="copyOrderIdBtn" type="button">Copy Order ID</button>
+      <p class="modal-subtitle">Please complete sending your order through WhatsApp if it has not opened automatically.</p>
+      <button class="btn btn-outline full" id="doneOrderConfirmationBtn" type="button">Done</button>
+    </div>
+  </div>
+
   <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
     <a href="#home" class="mobile-nav-item">
       <span class="mobile-nav-icon">⌂</span>
