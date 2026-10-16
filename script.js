@@ -3,6 +3,7 @@ let products = [];
 let settings = {};
 let cart = [];
 let activeCategory = "All";
+let fruitAnimations = null;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -10,6 +11,61 @@ const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, c => ({
   "&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;",'"':"&quot;"
 }[c]));
 const money = value => `${settings.currency || "GH₵"}${Number(value || 0).toFixed(2)}`;
+
+// Floating fruit animation: spawns emoji elements that float up and fade
+function initFruitAnimations(options = {}) {
+  const container = document.getElementById("fruit-container");
+  if (!container) return null;
+
+  const defaults = {
+    emojis: ["🍎","🍌","🍊","🍍","🍓","🍇","🥭","🍉","🥝","🍋"],
+    spawnInterval: 600,
+    maxOnScreen: 24,
+    minSize: 18,
+    maxSize: 56,
+    durationMin: 4200,
+    durationMax: 9000
+  };
+  const cfg = Object.assign({}, defaults, options);
+
+  let running = true;
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function spawnFruit() {
+    if (!running) return;
+    if (container.children.length >= cfg.maxOnScreen) return;
+
+    const el = document.createElement('div');
+    el.className = 'fruit float-up';
+    el.textContent = cfg.emojis[Math.floor(Math.random() * cfg.emojis.length)];
+
+    const size = Math.round(rand(cfg.minSize, cfg.maxSize));
+    el.style.fontSize = `${size}px`;
+    el.style.left = `${rand(2, 96)}vw`;
+    el.style.bottom = `-${rand(6, 18)}vh`;
+
+    const drift = `${Math.round(rand(-80, 80))}px`;
+    const rot = `${Math.round(rand(-220, 220))}deg`;
+    el.style.setProperty('--fruit-drift-x', drift);
+    el.style.setProperty('--fruit-rotation', rot);
+
+    const duration = Math.round(rand(cfg.durationMin, cfg.durationMax));
+    el.style.animationDuration = `${duration}ms`;
+
+    container.appendChild(el);
+
+    el.addEventListener('animationend', () => { if (el.parentNode) el.parentNode.removeChild(el); });
+  }
+
+  const id = setInterval(spawnFruit, cfg.spawnInterval);
+
+  return {
+    stop() { running = false; clearInterval(id); },
+    start() { if (!running) { running = true; /* won't restart interval - kept simple */ } },
+    clear() { container.innerHTML = ''; }
+  };
+}
 
 function saveCart() {
   localStorage.setItem("lhyriczFruitBayCartV1", JSON.stringify(cart));
@@ -86,6 +142,13 @@ function addToCart(id) {
   saveCart();
   renderCart();
   openCart();
+  if (fruitAnimations && typeof fruitAnimations.spawn === 'function') {
+    try { fruitAnimations.spawn(); } catch (e) { /* ignore */ }
+  } else if (fruitAnimations == null && document.getElementById('fruit-container')) {
+    // fallback: create a single fruit immediately
+    const container = document.getElementById('fruit-container');
+    const el = document.createElement('div'); el.className = 'fruit float-up'; el.textContent = p.emoji || '🍎'; el.style.fontSize = '34px'; el.style.left = `${Math.random()*90+5}%`; el.style.animationDuration = '2800ms'; container.appendChild(el); el.addEventListener('animationend', () => { if (el.parentNode) el.parentNode.removeChild(el); });
+  }
 }
 
 function changeQty(id, delta) {
@@ -305,6 +368,9 @@ async function refreshStore() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   loadCart();
+  // initialize fruit animations (if the container exists)
+  fruitAnimations = initFruitAnimations();
+
   await refreshStore();
 
   $("#openCartBtn")?.addEventListener("click", openCart);
