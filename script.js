@@ -223,6 +223,26 @@ async function submitCheckout(event) {
 
     const orderId = `LFB-${String(savedOrder.id).replace(/-/g, "").toUpperCase()}`;
 
+       // Send the order confirmation SMS without interrupting checkout.
+    try {
+      const { data, error } = await Store.supabase.functions.invoke(
+        "send-order-sms",
+        {
+          body: { order_id: savedOrder.id }
+        }
+      );
+
+      if (error) {
+        console.error("Order SMS request failed:", error.message);
+      } else if (data?.success) {
+        console.log("Order SMS accepted:", data.orderId);
+      } else {
+        console.warn("Order SMS was not confirmed:", data);
+      }
+    } catch (smsError) {
+      console.error("SMS notification error:", smsError);
+    }
+
     const message = buildWhatsAppMessage(form, orderId);
     cart = [];
     saveCart();
@@ -267,25 +287,7 @@ async function copyOrderId() {
   }
 }
 
-   // Send the order confirmation SMS without interrupting checkout.
-    try {
-      const { data, error } = await Store.supabase.functions.invoke(
-        "send-order-sms",
-        {
-          body: { order_id: savedOrder.id }
-        }
-      );
 
-      if (error) {
-        console.error("Order SMS request failed:", error.message);
-      } else if (data?.success) {
-        console.log("Order SMS accepted:", data.orderId);
-      } else {
-        console.warn("Order SMS was not confirmed:", data);
-      }
-    } catch (smsError) {
-      console.error("SMS notification error:", smsError);
-    }
 
 async function refreshStore() {
   try {
